@@ -1,5 +1,5 @@
 const express = require('express');
-const bodyParser = require('bodyParser');
+const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
 const port = 8080;
@@ -37,6 +37,6 @@ app.post('/analyse', (req, res) => {
     })
 })
 
-app.listen(port, () => {
+app.listen(port, '0.0.0.0', () => {
     console.log(`Server is running on ${port}`);
 });
