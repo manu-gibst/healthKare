@@ -5,36 +5,36 @@ const app = express();
 const port = 8080;
 
 app.use(cors())
-app.use(bodyParser.json({ extended: true }))
+app.use(express.json())
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use((req, res, next) => {
+    console.log('Time:', Date.now(), '\n\t', req.body);
+    next();
+});
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
-app.post('/analyse', (req, res) => {
-    const accels = req.body;
+app.get('/analyze', (req, res) => {
+    res.json({ message: "hi" });
+})
 
-    if (!Array.isArray(accels))
+app.post('/analyze', (req, res) => {
+    const body = req.body;
+    const samples = body.samples.split(',').map(Number)
+
+    if (!Array.isArray(samples))
         return res.status(400).json({ error: 'Request body must be array!' });
 
-    for (let accel of accels) {
-        let missing = '';
-        if (accel.timestamp === undefined) missing += 'timestamp';
-        if (accel.x === undefined) missing += 'x';
-        if (accel.y === undefined) missing += 'y';
-        if (accel.z === undefined) missing += 'z';
+    const sum = samples.reduce((acc, sample) => acc + sample);
+    console.log("sum:", sum);
 
-        if (missing !== '') {
-            return res.status(400).json(
-                { error: `Following request body parameters are missing in the array: ${missing}` }
-            );
-        }
-    }
-
-    console.log(`Array is accepted: ${accel}`);
+    console.log(`Array is accepted: ${samples}`);
     res.status(200).json({
         message: 'Array accepted',
-    })
+    });
 })
 
 app.listen(port, '0.0.0.0', () => {

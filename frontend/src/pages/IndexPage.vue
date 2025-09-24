@@ -18,8 +18,7 @@
 </template>
 
 <script setup>
-  import {reactive, computed} from 'vue';
-  
+  import {reactive, computed} from 'vue';  
   /*
     Business Logic Layer
   */
@@ -72,6 +71,9 @@
     clearInterval(minuteBatching);
     batching(); // last batching
     minuteBatching = null;
+
+    await sendSamples(); // send samples to the server
+    batchedSamples = []; // empty samples
   }
 
   function onMotion(ev) {
@@ -108,5 +110,32 @@
   }
 
   const throttledOnMotion = throttle(onMotion, 1000) // 1hz Sampling Rate
+
+  /*
+    Service Layer
+  */
+
+  import axios from 'axios';
+
+  const instance = axios.create({
+    baseURL: 'https://f666c06d3b51.ngrok-free.app/',
+    timeout: 5000, 
+  });
+
+  async function sendSamples() {
+    await instance({
+      url: '/analyze',
+      method: 'post',
+      data: {
+        samples: batchedSamples.join(','),
+      },
+    }).then(function(res) {
+      data.log = `${res.data.message}`;
+    }).catch(function(err) {
+      console.log(err);
+      data.log = err;
+    }); 
+  }
+  
 
 </script>
