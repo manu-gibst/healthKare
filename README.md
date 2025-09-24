@@ -13,3 +13,4 @@
 1. Vue.js Documentation Tutorials. [Tutorials Link](https://vuejs.org/tutorial/). 
 2. Make Apps With Danny. [Video link](https://www.youtube.com/watch?v=PjCqsf87Z1Y). *To get started with the UI*
 3. jeetvora331. [Throttling in JavaScript Easiest Explanation](https://dev.to/jeetvora331/throttling-in-javascript-easiest-explanation-1081). 
+4. mdn. [Window: setInterval() method](https://developer.mozilla.org/en-US/docs/Web/API/Window/setInterval)

@@ -1,8 +1,8 @@
 <template>
   <q-page class="flex flex-center">
     <div class="row full-width">
-      <div class="col text-center">{{ data.state }}</div>
       <div class="col text-center">{{ data.log }}</div>
+      <div class="col text-center">{{ batchedSamplesView }}</div>
     </div>
     <div class="row">
       <div class="col text-center">
@@ -25,7 +25,7 @@
   */
 
   const data = reactive({
-    state: 'initial',
+    state: 'not sleeping',
     log: '',
   });
 
@@ -51,18 +51,27 @@
     Service Logic Layer
   */
 
+  let minuteBatching = null;
+
+  let samples = [];
+  let batchedSamples = [];
+
   async function startTracking() {
-    data.log = 'startTracking() called';
     if (typeof DeviceMotionEvent !== 'undefined' && typeof DeviceMotionEvent.requestPermission === 'function') {
       const res = await DeviceMotionEvent.requestPermission();
       if (res !== 'granted') return;
     }
     window.addEventListener('devicemotion', throttledOnMotion, { passive: true });
+    minuteBatching = setInterval(batching, 5000);
+    // TODO: Don't forget to raise it back to 60sec
   }
 
   async function stopTracking() {
+    // Removing listeners
     window.removeEventListener('devicemotion', throttledOnMotion);
-    
+    clearInterval(minuteBatching);
+    batching(); // last batching
+    minuteBatching = null;
   }
 
   function onMotion(ev) {
@@ -71,13 +80,22 @@
     const x = a.x || 0, y = a.y || 0, z = a.z || 0;
     const timestamp = Date.now();
     // Units may be m/s^2. Optionally convert to g: divide by 9.80665.
-    console.log(`{ timestamp=${timestamp}, x=${x}, y=${y}, z=${z} }`);
-    data.log = `{ timestamp=${timestamp}, x=${x}, y=${y}, z=${z} }`;
-    // samples.push({ timestamp, x, y, z });
+    samples.push({ timestamp, x, y, z });
   }
 
+  function batching() {
+    const sumRms =  samples.reduce((acc, sample) => acc + getRms(sample), 0);
+    const rms = sumRms / samples.length; // average RMS
+
+    samples = []; // clear samples
+    batchedSamples.push(rms);
+    data.log = `Batched Samples Length: ${batchedSamples.length}`;
+  }
+
+  const  getRms = (sample) => Math.sqrt((sample.x * sample.x + sample.y * sample.y + sample.z * sample.z) / 3);
+
   function throttle(func, delay) {
-    let timerFlag = null; 
+    let timerFlag = null;
 
     return (...args) => {
       if(timerFlag === null) {
