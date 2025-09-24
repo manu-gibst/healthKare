@@ -19,6 +19,10 @@
 
 <script setup>
   import {reactive, computed} from 'vue';
+  
+  /*
+    Business Logic Layer
+  */
 
   const data = reactive({
     state: 'initial',
@@ -43,17 +47,22 @@
     return data.state === 'sleeping'? 'pause' : 'play_arrow'
   });
 
+  /* 
+    Service Logic Layer
+  */
+
   async function startTracking() {
     data.log = 'startTracking() called';
     if (typeof DeviceMotionEvent !== 'undefined' && typeof DeviceMotionEvent.requestPermission === 'function') {
       const res = await DeviceMotionEvent.requestPermission();
       if (res !== 'granted') return;
     }
-    window.addEventListener('devicemotion', onMotion, { passive: true });
+    window.addEventListener('devicemotion', throttledOnMotion, { passive: true });
   }
 
   async function stopTracking() {
-    window.removeEventListener('devicemotion', onMotion);
+    window.removeEventListener('devicemotion', throttledOnMotion);
+    
   }
 
   function onMotion(ev) {
@@ -66,4 +75,20 @@
     data.log = `{ timestamp=${timestamp}, x=${x}, y=${y}, z=${z} }`;
     // samples.push({ timestamp, x, y, z });
   }
+
+  function throttle(func, delay) {
+    let timerFlag = null; 
+
+    return (...args) => {
+      if(timerFlag === null) {
+        func(...args);
+        timerFlag = setTimeout(() => {
+          timerFlag = null;
+        }, delay);
+      }
+    }
+  }
+
+  const throttledOnMotion = throttle(onMotion, 1000) // 1hz Sampling Rate
+
 </script>
