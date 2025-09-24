@@ -1,7 +1,12 @@
-const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const dotenv = require('dotenv')
+const express = require('express');
+
+const { Sleep } = require('./sleep')
+
 const app = express();
+
 const port = 8080;
 
 app.use(cors())
@@ -13,30 +18,29 @@ app.use((req, res, next) => {
     next();
 });
 
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
-
-app.get('/analyze', (req, res) => {
-    res.json({ message: "hi" });
-})
-
 app.post('/analyze', (req, res) => {
-    const body = req.body;
-    const samples = body.samples.split(',').map(Number)
-
-    if (!Array.isArray(samples))
+    if (!Array.isArray(req.body.samples))
         return res.status(400).json({ error: 'Request body must be array!' });
 
-    const sum = samples.reduce((acc, sample) => acc + sample);
-    console.log("sum:", sum);
+    const processedSamples = req.body.samples.map((sample, index) => ({
+        id: index,
+        timestamp: parseInt(sample.timestamp),
+        rms: parseFloat(sample.rms),
+    }));
 
-    console.log(`Array is accepted: ${samples}`);
+    const sleep = new Sleep(processedSamples);
+    const duration = sleep.getDuration();
+    const efficiency = sleep.getEfficiency();
+    const quality = sleep.getQuality();
+    
     res.status(200).json({
-        message: 'Array accepted',
+        duration: duration,
+        efficiency: efficiency,
+        quality: quality,
     });
 })
 
 app.listen(port, '0.0.0.0', () => {
     console.log(`Server is running on ${port}`);
+    dotenv.config({ path: '../.env' })
 });

@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-  import {reactive, computed} from 'vue';  
+  import {reactive, computed} from 'vue';
   /*
     Business Logic Layer
   */
@@ -89,8 +89,12 @@
     const sumRms =  samples.reduce((acc, sample) => acc + getRms(sample), 0);
     const rms = sumRms / samples.length; // average RMS
 
+    batchedSamples.push({
+      timestamp: samples[0].timestamp,
+      rms: rms,
+    });
+
     samples = []; // clear samples
-    batchedSamples.push(rms);
     data.log = `Batched Samples Length: ${batchedSamples.length}`;
   }
 
@@ -117,8 +121,10 @@
 
   import axios from 'axios';
 
+  const baseUrl = 'https://1e75400300df.ngrok-free.app/';
+
   const instance = axios.create({
-    baseURL: 'https://f666c06d3b51.ngrok-free.app/',
+    baseURL: baseUrl,
     timeout: 5000, 
   });
 
@@ -127,13 +133,13 @@
       url: '/analyze',
       method: 'post',
       data: {
-        samples: batchedSamples.join(','),
+        samples: batchedSamples,
       },
     }).then(function(res) {
-      data.log = `${res.data.message}`;
+      data.log = `Duration: ${res.data.duration}, Efficiency: ${res.data.efficiency}, Quality: ${res.data.quality}`;
     }).catch(function(err) {
       console.log(err);
-      data.log = err;
+      // data.log = err;
     }); 
   }
   

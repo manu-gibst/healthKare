@@ -4,10 +4,11 @@
 2. Install these npm packages: `axios`
 3. Enter `cd ./frontend`, then run `quasar dev -m pwa`.
 4. Install node from the website, if it is not installed already. 
-5. Open new terminal and enter `cd ./backend`, then run `node ./index.js`. 
-6. Install ngrok and run `ngrok http 8080`. *(remove later and find a better alternative)*
-7. Open the Website(IP-address and 9200 port number) on your Smartphone. (Phone and the server should be on the same IP-address!)
-8. Ignore the warnings by the browser. 
+5. Install `npm install dotenv`
+6. Open new terminal and enter `cd ./backend`, then run `node ./index.js`. 
+7. Install ngrok and run `ngrok http 8080`. *(remove later and find a better alternative)*
+8. Open the Website(IP-address and 9200 port number) on your Smartphone. (Phone and the server should be on the same IP-address!)
+9. Ignore the warnings by the browser. 
 
 !CHECK IT BEFORE SUBMISSION
 
