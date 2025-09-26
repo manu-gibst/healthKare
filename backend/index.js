@@ -20,7 +20,7 @@ const app = express();
 const port = 3000;
 
 const corsOptions = {
-    origin: 'https://manu-gibst-github-io-mokd.vercel.app/',
+    origin: 'https://manu-gibst-github-io-mokd.vercel.app',
 }
 
 app.use(cors(corsOptions))
