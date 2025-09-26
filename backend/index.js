@@ -2,20 +2,20 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const dotenv = require('dotenv')
 const express = require('express');
-const fs = require('fs');
-const https = require('https');
+// const fs = require('fs');
+// const https = require('https');
 
 const { Sleep } = require('./sleep')
 
-const privateKey = fs.readFileSync('localhost-key.pem', 'utf8');
-const certificate = fs.readFileSync('localhost.pem', 'utf8');
+// const privateKey = fs.readFileSync('localhost-key.pem', 'utf8');
+// const certificate = fs.readFileSync('localhost.pem', 'utf8');
 
-const passphrase = '';
-const credentials = { key: privateKey, passphrase, cert: certificate };
+// const passphrase = '';
+// const credentials = { key: privateKey, passphrase, cert: certificate };
 
 const app = express();
 
-const httpsServer = https.createServer(credentials, app)
+// const httpsServer = https.createServer(credentials, app)
 
 const port = 3000;
 
@@ -61,10 +61,12 @@ app.post('/analyze', (req, res) => {
     });
 })
 
-httpsServer.listen(port, () => {
+// httpsServer.listen(port, () => {
+//     console.log(`Server is running on ${port}`);
+//     dotenv.config({ path: '../.env' })
+// })
+
+app.listen(port, '0.0.0.0', () => {
     console.log(`Server is running on ${port}`);
     dotenv.config({ path: '../.env' })
-})
-
-// app.listen(port, '0.0.0.0', () => {
-// });
+});
