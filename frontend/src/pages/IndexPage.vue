@@ -171,8 +171,6 @@
   let batchedSamples = [];
 
   async function startTracking() {
-    await test();
-    return;
     batchedSamples = []; // empty samples
 
     data.haveResponse = false;
@@ -246,17 +244,6 @@
     baseURL: baseUrl,
     timeout: 5000, 
   });
-
-  async function test() {
-    await instance({
-      url: 'analyze',
-      method: 'get',
-    }).then(function(res) {
-      console.log(res);
-    }).catch(function(err) {
-      console.log(err);
-    });
-  }
 
   async function sendSamples() {
     await instance({
