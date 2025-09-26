@@ -179,7 +179,7 @@
       if (res !== 'granted') return;
     }
     window.addEventListener('devicemotion', throttledOnMotion, { passive: true });
-    minuteBatching = setInterval(batching, 5000);
+    minuteBatching = setInterval(batching, 1000 * 60);
     // TODO: Don't forget to raise it back to 60sec
   }
 
