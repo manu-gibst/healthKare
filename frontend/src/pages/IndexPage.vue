@@ -237,8 +237,8 @@
   */
 
 
-  const baseUrl = 'https://184.72.82.156:3000';
-  // const baseUrl = 'https://172.20.10.3:3000';
+  // const baseUrl = 'https://184.72.82.156:3000';
+  const baseUrl = 'https://manu-gibst-github-io-mokd-7wjkfi8o5-manus-projects-9a2ed1a5.vercel.app';
 
   const instance = axios.create({
     baseURL: baseUrl,

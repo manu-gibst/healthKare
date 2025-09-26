@@ -1,16 +1,18 @@
 # Sleep Tracker
-## Setup
-1. Install Quasar CLI: `npm i -g @quasar/cli`.
-2. Install these npm packages: `axios`
-3. Enter `cd ./frontend`, then run `quasar dev -m pwa`.
-4. Install node from the website, if it is not installed already. 
-5. Install `npm install dotenv`
-6. Open new terminal and enter `cd ./backend`, then run `node ./index.js`. 
-7. Install ngrok and run `ngrok http 8080`. *(remove later and find a better alternative)*
-8. Open the Website(IP-address and 9200 port number) on your Smartphone. (Phone and the server should be on the same IP-address!)
-9. Ignore the warnings by the browser. 
-
-!CHECK IT BEFORE SUBMISSION
+## Usage
+1. Go to https://manu-gibst-github-io.vercel.app/#/ (from smartphone)
+2. Press the **Start** button.
+3. Wait a couple of minutes. 
+4. Press the **Stop** button. 
+5. View ur sleep analysys and graph. 
+## Tech Stack
+### Frontend
+- Frameworks: *Vue.js, Quasar PWA*
+- Additional packages: *axios, chart.js*
+- Hosting: *Vercel*
+### Backend
+- Frameworks: *node.js, express.js*
+- Hosting: *Vercel*
 
 ## Formulas:
 * To calculate `stroke-linecap` for time indicaton$^7$:
@@ -28,8 +30,19 @@ $$
 y = Size + R \cos(degrees)
 $$
 
-
-
+### Challenges
+- **Bad architecture**. My inexperience in a new framework resulted in a poor architecture and lack of component based design. I started really to understand Vue.js only towards the end of development. 
+- **Network difficulties**. During the development I stumbled upon problems of working with HTTPS protocol. For example I couldn't connect to backend because it had HTTP protocol, so I had to use *ngrok* and then later *Vercel*. 
+- **JavaScript issues**. It was very hard to find errors with JavaScript, it is far better to use TypeScript. 
+### Limitations
+- **Background worker**. Unfortunately, it is impossible to implement background worker to track accelerometer without going into native implementations. 
+## Conclusion
+Overall, this project was really fun. I had great time developing non-stop for 3 days straight. <br>
+This project tested my adaptability to new frameworks. I am proud to say that I have made a decent app despite it being my first time working with *Vue.js* and *Express.js*. <br>
+There were other things that I wanted to implement like dark theme, weekly statistics, but I was running out of time. 
+<br><br><br>
+<hr>
+Below are the most of the sources that I used during the development. 
 
 ## References:
 1. Vue.js Documentation Tutorials. [Tutorials Link](https://vuejs.org/tutorial/). 
