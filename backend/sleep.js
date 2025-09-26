@@ -1,7 +1,7 @@
 const GRAVITY = 9.80665;
 const threshold = 0.0185 * GRAVITY;
 
-export class Sleep {
+class Sleep {
     constructor(samples) {
         this.samples = samples;
         this._lowActivityMinutes = null;
@@ -54,3 +54,5 @@ export class Sleep {
         return this.samples.length;
     }
 }
+
+module.exports = { Sleep };
