@@ -213,7 +213,7 @@
   */
 
 
-  const baseUrl = 'https://localhost/3000';
+  const baseUrl = 'https://184.72.82.156:3000';
 
   const instance = axios.create({
     baseURL: baseUrl,
@@ -221,6 +221,7 @@
   });
 
   async function sendSamples() {
+    data.log = batchedSamples.length;
     await instance({
       url: '/analyze',
       method: 'post',
@@ -228,7 +229,11 @@
         samples: batchedSamples,
       },
     }).then(function(res) {
-      data.log = `Duration: ${res.data.duration}, Efficiency: ${res.data.efficiency}, Quality: ${res.data.quality}`;
+      data.response = {
+        duration: res.data.duration,
+        efficiency: res.data.efficiency,
+        quality: res.data.quality,
+      }
     }).catch(function(err) {
       data.log = err;
       console.log(err);

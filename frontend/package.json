@@ -19,7 +19,7 @@
     "axios": "^1.12.2",
     "quasar": "^2.16.0",
     "register-service-worker": "^1.7.2",
-    "vue": "3.5.20",
+    "vue": "^3.5.22",
     "vue-router": "^4.0.0"
   },
   "devDependencies": {
@@ -46,5 +46,8 @@
     "node": "^28 || ^26 || ^24 || ^22 || ^20",
     "npm": ">= 6.13.4",
     "yarn": ">= 1.21.1"
-  }
+  },
+  "main": "eslint.config.js",
+  "keywords": [],
+  "license": "ISC"
 }
