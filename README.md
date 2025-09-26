@@ -12,6 +12,25 @@
 
 !CHECK IT BEFORE SUBMISSION
 
+## Formulas:
+* To calculate `stroke-linecap` for time indicaton$^7$:
+$$
+2 \cdot \pi * R
+$$
+* To convert time to coordinates
+$$
+degrees = (hours \space \% \space 12) \cdot 30^\circ + minutes \space \cdot \space 0.5^\circ
+$$
+$$
+x = Size + R \sin(degrees)
+$$
+$$
+y = Size + R \cos(degrees)
+$$
+
+
+
+
 ## References:
 1. Vue.js Documentation Tutorials. [Tutorials Link](https://vuejs.org/tutorial/). 
 2. Make Apps With Danny. [Video link](https://www.youtube.com/watch?v=PjCqsf87Z1Y). *To get started with the UI*
@@ -19,3 +38,4 @@
 4. mdn. [Window: setInterval() method](https://developer.mozilla.org/en-US/docs/Web/API/Window/setInterval)
 5. ngrok. [ngrok.com/docs](https://ngrok.com/docs). 
 6. Quasar Style & Identity Documentation. [https://quasar.dev/style/theme-builder](https://quasar.dev/style/theme-builder)
+7. Stackoverflow. [https://stackoverflow.com/questions/69169928/i-need-to-make-a-circular-progress-bar-with-rounded-ends](https://stackoverflow.com/questions/69169928/i-need-to-make-a-circular-progress-bar-with-rounded-ends)

@@ -4,15 +4,15 @@
 			round unelevated 
 			color="primaryVariant"
 			class="glow-5 glow-2"
-			:icon="iconName"
-			@click="toggleSleep"
+			:icon="props.iconName"
+			@click="props.toggleSleep"
 			size="32px"
 		/>
 	</div>
 </template>
 
 <script setup lang>
-	defineProps({
+	const props = defineProps({
 		iconName: {
 			type: String, 
 			required: true,
