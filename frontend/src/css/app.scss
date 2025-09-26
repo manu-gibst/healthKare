@@ -1,1 +1,153 @@
 // app global css in SCSS form
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap');
+
+.circle {
+    border-radius: 50%;
+}
+
+.stroke {
+    stroke: $primaryVariant;
+    stroke-width: 26px;
+    stroke-linecap: round;
+    stroke-dasharray: 791.7;
+}
+
+#current-time {
+    width: 26px;
+    height: 26px;
+    background-color: $surfaceHigh;
+    border: 1px solid $primaryVariant;
+    translate: 126px;
+}
+
+.montserrat {
+    font-family: 'Montserrat', serif;
+}
+
+// Letter Spacing
+
+@for $i from 1 through 10 {
+    .letter-spacing-#{$i} {
+        letter-spacing: #{$i}px;
+    }
+}
+
+// Glowing
+
+@for $i from 1 through 10 {
+    .glow-#{$i} {
+        box-shadow: 0 0 #{$i*5}px #{$i}px $primary;
+    }
+}
+
+// Shadow
+
+.depth {
+    box-shadow:
+        -35px -25px 40px 10px $surface,
+        32px 24px 80px 5px $shadow;
+}
+
+.shadow {
+    box-shadow: 32px 24px 80px 5px $shadow;
+}
+
+// Containers
+
+.container-high {
+    background-image: linear-gradient(-75deg, $surfaceHighest, $surfaceHigh)
+}
+
+.container-highest {
+    background-image: linear-gradient(-75deg, $surfaceHigh, $surface)
+}
+
+// Custom colors:
+
+.text-surface {
+    color: $surface !important;
+}
+
+.bg-surface {
+    background: $surface !important;
+}
+
+text-surfaceHigh {
+    color: $surfaceHigh !important;
+}
+
+.bg-surfaceHigh {
+    background: $surfaceHigh !important;
+}
+
+text-surfaceHighest {
+    color: $surfaceHighest !important;
+}
+
+.bg-surfaceHighest {
+    background: $surfaceHighest !important;
+}
+
+.text-surfaceSubtitleText {
+    color: $surfaceSubtitleText !important;
+}
+
+.bg-surfaceSubtitleText {
+    background: $surfaceSubtitleText !important;
+}
+
+.text-shadow {
+    color: $shadow !important;
+}
+
+.bg-shadow {
+    background: $shadow !important;
+}
+
+.text-primaryVariant {
+    color: $primaryVariant !important;
+}
+
+.bg-primaryVariant {
+    background: $primaryVariant !important;
+}
+
+.text-darkPrimary {
+    color: $darkPrimary !important;
+}
+
+.bg-darkPrimary {
+    background: $darkPrimary !important;
+}
+
+.text-surfaceDark {
+    color: $surfaceDark !important;
+}
+
+.bg-surfaceDark {
+    background: $surfaceDark !important;
+}
+
+.text-surfaceHighDark {
+    color: $surfaceHighDark !important;
+}
+
+.bg-surfaceHighDark {
+    background: $surfaceHighDark !important;
+}
+
+.text-surfaceHighestDark {
+    color: $surfaceHighestDark !important;
+}
+
+.bg-surfaceHighestDark {
+    background: $surfaceHighestDark !important;
+}
+
+.text-shadowDark {
+    color: $shadowDark !important;
+}
+
+.bg-shadowDark {
+    background: $shadowDark !important;
+}

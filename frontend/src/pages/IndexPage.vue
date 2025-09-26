@@ -1,51 +1,118 @@
 <template>
-  <q-page class="flex flex-center">
-    <div class="row full-width">
-      <div class="col text-center">{{ data.log }}</div>
-      <div class="col text-center">{{ batchedSamplesView }}</div>
+  <q-page class="flex column montserrat">
+    <div class="col-1 q-mt-xl text-center">
+      <q-title class="text-h6 letter-spacing-10 text-weight-light text-surfaceSubtitleText">
+        HEALTH KARE
+      </q-title>
     </div>
-    <div class="row">
-      <div class="col text-center">
-        <q-btn
-          round color="primary"
-          :icon="iconName"
-          @click="toggleSleep"
-          size="32px"
-        />
+
+    <div class="col-grow flex justify-center items-center relative-position">
+      <div class="circle container-high  flex justify-center items-center depth" style="width:300px; height:300px">
+        <div class="circle container-highest flex justify-center items-center shadow" style="width:200px; height:200px">
+          <div style="font-size: 40px; font-weight: 200;" class="text-primary">
+            <div class="letter-spacing-4">
+              {{ getStringTime }}
+            </div>
+          </div>
+        </div>
+        <!-- <svg v-if="data.sleeping" width="520" height="520" class="absolute-center"> -->
+        <svg width="520" height="520" class="absolute-center">
+          <circle 
+            cx="260"
+            cy="260"
+            r="126"
+            class="stroke"
+            :style="{'stroke-dashoffset': getProgress}"
+            fill="none"
+          />
+        </svg>
+        <div class="circle absolute-center" id="current-time">
+        </div>
       </div>
+    </div>
+
+    <div class="col-1">
+      <div class="text-center text-surfaceSubtitleText letter-spacing-7 text-weight-medium">
+        <div>{{ data.log }}</div>
+        <div>{{ data.sleeping ? "Sleeping" : "Not Sleeping" }}</div>
+        <span v-if="sleeping">STOP SLEEP</span>
+        <span v-else>START SLEEP</span>
+      </div>
+      <Button 
+        class="q-mt-lg"
+        style="padding-bottom: 30%;"
+        :iconName="iconName" 
+        :toggleSleep="toggleSleep" 
+      />
     </div>
   </q-page>
 </template>
 
 <script setup>
-  import {reactive, computed} from 'vue';
+  import {reactive, computed, onMounted, onUnmounted} from 'vue';
+  import axios from 'axios';
+  import Button from './sleepButton.vue'
   /*
     Business Logic Layer
   */
 
   const data = reactive({
-    state: 'not sleeping',
+    sleeping: false,
     log: '',
+    time: {
+      hours: 0,
+      minutes: 0,
+    },
+    timer: null,
   });
 
+  const RADIUS = 126;
+
+
   async function toggleSleep () {
-    switch (data.state) {
-      case 'not sleeping':
+    switch (data.sleeping) {
+      case false:
         await startTracking();
-        data.state = 'sleeping';
+        data.sleeping = true;
         break;
-      case 'sleeping':
-      default:
+      case true:
         await stopTracking();
-        data.state = 'not sleeping';
+        data.sleeping= false;
         break;
     }
   };
 
   const iconName = computed(() => {
-    return data.state === 'sleeping'? 'pause' : 'play_arrow'
+    return data.sleeping? 'pause' : 'play_arrow'
   });
 
+  const getStringTime = computed(() => {
+    return `${data.time.hours.toString().padStart(2, '0')}:${data.time.minutes.toString().padStart(2, '0')}`;
+  });
+
+  const getProgress = computed(() => {
+    if(samples.length === 0) return 2 * Math.PI * RADIUS;
+
+    const diff = samples.at(-1).timestamp - samples[0].timestamp;
+    const hours = diff / 1000 / 3600;
+    const ratio = hours / 12;
+    return 2 * Math.PI * (1-ratio) * RADIUS;
+  });
+
+  const updateTime = () => {
+    const now = new Date();
+    data.time.hours = now.getHours();
+    data.time.minutes = now.getMinutes();
+  }
+
+  onMounted(() => {
+    data.timer = setInterval(updateTime, 1000);
+  });
+  
+  onUnmounted(()=>{
+    clearInterval(updateTime);
+    data.timer = null;
+  });
   /* 
     Service Logic Layer
   */
@@ -66,7 +133,7 @@
   }
 
   async function stopTracking() {
-    // Removing listeners
+    // Removing listeners    
     window.removeEventListener('devicemotion', throttledOnMotion);
     clearInterval(minuteBatching);
     batching(); // last batching
@@ -76,7 +143,7 @@
     batchedSamples = []; // empty samples
   }
 
-  function onMotion(ev) {
+  async function onMotion(ev) {
     const a = ev.acceleration || ev.accelerationIncludingGravity;
     if (!a) return;
     const x = a.x || 0, y = a.y || 0, z = a.z || 0;
@@ -115,13 +182,13 @@
 
   const throttledOnMotion = throttle(onMotion, 1000) // 1hz Sampling Rate
 
+
   /*
     Service Layer
   */
 
-  import axios from 'axios';
 
-  const baseUrl = 'https://1e75400300df.ngrok-free.app/';
+  const baseUrl = 'https://e6931b7e0181.ngrok-free.app/';
 
   const instance = axios.create({
     baseURL: baseUrl,
@@ -139,7 +206,6 @@
       data.log = `Duration: ${res.data.duration}, Efficiency: ${res.data.efficiency}, Quality: ${res.data.quality}`;
     }).catch(function(err) {
       console.log(err);
-      // data.log = err;
     }); 
   }
   

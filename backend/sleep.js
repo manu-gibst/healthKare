@@ -1,4 +1,5 @@
-const threshold = 0.0185;
+const GRAVITY = 9.80665;
+const threshold = 0.0185 * GRAVITY;
 
 export class Sleep {
     constructor(samples) {

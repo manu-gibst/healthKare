@@ -18,4 +18,4 @@
 3. jeetvora331. [Throttling in JavaScript Easiest Explanation](https://dev.to/jeetvora331/throttling-in-javascript-easiest-explanation-1081). 
 4. mdn. [Window: setInterval() method](https://developer.mozilla.org/en-US/docs/Web/API/Window/setInterval)
 5. ngrok. [ngrok.com/docs](https://ngrok.com/docs). 
-6. 
+6. Quasar Style & Identity Documentation. [https://quasar.dev/style/theme-builder](https://quasar.dev/style/theme-builder)

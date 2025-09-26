@@ -13,6 +13,39 @@ import { registerRoute, NavigationRoute } from 'workbox-routing'
 self.skipWaiting()
 clientsClaim()
 
+if ('permissions' in navigator && 'query' in navigator.permissions) {
+  console.log("Has permissions");
+}
+
+console.log("ASKING...");
+const status = await navigator.permissions.query({
+  name: 'periodic-background-sync',
+});
+if (status.state === 'granted') {
+  console.log("Periodic background sync can be used.");
+} else {
+  console.log("Periodic background sync cannot be used.");
+}
+console.log("ASKED");
+
+// const registration = await navigator.serviceWorker.ready;
+// if ('periodicSync' in registration) {
+//   try {
+//     await registration.periodicSync.register('content-sync', {
+//       // An interval of one day.
+//       minInterval: 24 * 60 * 60 * 1000,
+//     });
+//   } catch (error) {
+//     // Periodic background sync cannot be used.
+//   }
+// }
+
+self.addEventListener('periodicsync', event => {
+  if (event.tag === 'your-sync-tag') {
+    event.waitUntil(() => console.log("aaaaaaaa..."));
+  }
+});
+
 // Use with precache injection
 precacheAndRoute(self.__WB_MANIFEST)
 
