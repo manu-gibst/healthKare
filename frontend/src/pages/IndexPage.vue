@@ -50,6 +50,8 @@
       <div class="text-weight-light text-h6 text-surfaceSubtitleText">Quality:</div>
       <div class="text-weight-regular text-h5 text-primary">{{ data.response.quality }}</div>
       <hr class="text-surfaceHighest"/>
+
+      <Chart :samples="batchedSamples"/>
     </div>
 
     <div class="col-1">
@@ -70,7 +72,8 @@
 <script setup>
   import {reactive, ref, computed, onMounted, onUnmounted} from 'vue';
   import axios from 'axios';
-  import Button from './sleepButton.vue'
+  import Button from 'src/components/sleepButton.vue'
+  import Chart from 'src/components/ChartComponent.vue';
   /*
     Business Logic Layer
   */
@@ -93,7 +96,6 @@
 
   // Constants for the circle
   const RADIUS = 126;
-
 
   async function toggleSleep () { 
     if(!data.sleeping){
@@ -169,6 +171,9 @@
   let batchedSamples = [];
 
   async function startTracking() {
+    batchedSamples = []; // empty samples
+
+    data.haveResponse = false;
     if (typeof DeviceMotionEvent !== 'undefined' && typeof DeviceMotionEvent.requestPermission === 'function') {
       const res = await DeviceMotionEvent.requestPermission();
       if (res !== 'granted') return;
@@ -186,7 +191,6 @@
     minuteBatching = null;
 
     await sendSamples(); // send samples to the server
-    batchedSamples = []; // empty samples
   }
 
   async function onMotion(ev) {

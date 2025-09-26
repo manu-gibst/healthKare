@@ -39,3 +39,4 @@ $$
 5. ngrok. [ngrok.com/docs](https://ngrok.com/docs). 
 6. Quasar Style & Identity Documentation. [https://quasar.dev/style/theme-builder](https://quasar.dev/style/theme-builder)
 7. Stackoverflow. [https://stackoverflow.com/questions/69169928/i-need-to-make-a-circular-progress-bar-with-rounded-ends](https://stackoverflow.com/questions/69169928/i-need-to-make-a-circular-progress-bar-with-rounded-ends)
+8. Sam Meech-Ward. *Easily Deploy Full Stack Node.js Apps on AWS EC2 | Step-by-Step Tutorial.* [https://www.youtube.com/watch?v=nQdyiK7-VlQ](https://www.youtube.com/watch?v=nQdyiK7-VlQ)
