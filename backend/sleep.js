@@ -16,24 +16,25 @@ class Sleep {
     getDuration() {
         const first = this.samples[0].timestamp;
         const last = this.samples.at(-1).timestamp;
-        const diffHours = Math.abs((last - first) / 1000 / 3600);
-        console.log("diffHours:", diffHours);
-        return diffHours;
+        const diffMins = Math.floor((last - first) / 1000 / 60);
+        const diffHours = Math.floor((last - first) / 1000 / 60 / 60);
+        return `${diffHours.toString().padStart(2, '0')}:${diffMins.toString().padStart(2, '0')}`;
     }
 
     getEfficiency() {
-        console.log("low / total * 100 =", this._getLowActivityMinutes(), "/", this._getTotalMinutes(), "* 100 =", (this._getLowActivityMinutes() / this._getTotalMinutes()) * 100);
         return (this._getLowActivityMinutes() / this._getTotalMinutes()) * 100;
     }
 
     getQuality() {
-        const highActivityRate = (this._getHighActivityMinutes / this._getTotalMinutes);
+        const highActivityRate = (this._getHighActivityMinutes() / this._getTotalMinutes());
         if (highActivityRate < 0.1) return "High";
         if (highActivityRate < 0.2) return "Medium";
         return "Low";
     }
 
     _computeLowHighActivityMinutes() {
+        this._lowActivityMinutes = this._lowActivityMinutes || 0;
+        this._highActivityMinutes = this._highActivityMinutes || 0;
         for (let sample of this.samples) {
             if (sample.rms > threshold) this._highActivityMinutes++;
             else this._lowActivityMinutes++;
@@ -41,12 +42,12 @@ class Sleep {
     }
 
     _getLowActivityMinutes() {
-        if (this._lowActivityMinutes == null) this._computeLowHighActivityMinutes;
+        if (this._lowActivityMinutes === null) this._computeLowHighActivityMinutes();
         return this._lowActivityMinutes;
 
     }
     _getHighActivityMinutes() {
-        if (this._highActivityMinutes != null) this._computeLowHighActivityMinutes;
+        if (this._highActivityMinutes !== null) this._computeLowHighActivityMinutes();
         return this._highActivityMinutes;
     }
 

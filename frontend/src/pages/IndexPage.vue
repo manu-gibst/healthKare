@@ -1,6 +1,6 @@
 <template>
   <q-page class="flex column montserrat">
-    <div class="col-1 q-mt-xl text-center">
+    <div class="col-1 q-mt-xl text-center z-max">
       <q-title class="text-h6 letter-spacing-10 text-weight-light text-surfaceSubtitleText">
         HEALTH KARE
       </q-title>
@@ -38,6 +38,20 @@
       </div>
     </div>
 
+    <div v-if="data.haveResponse" class="col-1 q-pa-md">
+      <div class="text-weight-light text-h6 text-surfaceSubtitleText">Duration:</div>
+      <div class="text-weight-regular text-h5 text-primary">{{ data.response.duration }}</div>
+      <hr class="text-surfaceHighest"/>
+
+      <div class="text-weight-light text-h6 text-surfaceSubtitleText">Efficiency:</div>
+      <div class="text-weight-regular text-h5 text-primary">{{ data.response.efficiency }}</div>
+      <hr class="text-surfaceHighest"/>
+
+      <div class="text-weight-light text-h6 text-surfaceSubtitleText">Quality:</div>
+      <div class="text-weight-regular text-h5 text-primary">{{ data.response.quality }}</div>
+      <hr class="text-surfaceHighest"/>
+    </div>
+
     <div class="col-1">
       <div class="text-center text-surfaceSubtitleText letter-spacing-7 text-weight-medium">
         <div>{{ data.log }}</div>
@@ -64,6 +78,12 @@
   const data = reactive({
     sleeping: false,
     log: '',
+    haveResponse: false,
+    response: {
+        duration: null,
+        efficiency: null,
+        quality: null,
+      },
     time: {
       hours: 0,
       minutes: 0,
@@ -213,7 +233,8 @@
   */
 
 
-  const baseUrl = 'https://184.72.82.156:3000';
+  // const baseUrl = 'https://184.72.82.156:3000';
+  const baseUrl = 'https://172.20.10.3:3000';
 
   const instance = axios.create({
     baseURL: baseUrl,
@@ -221,7 +242,6 @@
   });
 
   async function sendSamples() {
-    data.log = batchedSamples.length;
     await instance({
       url: '/analyze',
       method: 'post',
@@ -233,9 +253,9 @@
         duration: res.data.duration,
         efficiency: res.data.efficiency,
         quality: res.data.quality,
-      }
+      };
+      data.haveResponse = true;
     }).catch(function(err) {
-      data.log = err;
       console.log(err);
     }); 
   }
