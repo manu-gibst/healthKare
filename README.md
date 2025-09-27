@@ -1,9 +1,9 @@
 # Sleep Tracker
 <p>Sleep Tracking app with an extensive analysis of sleep quality.</p>
 <div style="display: flex;">
-<img src="assets/image.png" alt="screenshot-1" height="600" />
-<img src="assets/image-1.png" alt="screenshot-2" height="600" />
-<img src="assets/sleep-tracker-demo.gif" alt="demo-video" height="600" />
+<img src="assets/image.png" alt="screenshot-1" height="400" />
+<img src="assets/image-1.png" alt="screenshot-2" height="400" />
+<img src="assets/sleep-tracker-demo.gif" alt="demo-video" height="400" />
 </div>
 
 ## Usage
