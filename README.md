@@ -1,6 +1,13 @@
 # Sleep Tracker
+<p>Sleep Tracking app with an extensive analysis of sleep quality.</p>
+<div style="display: flex;">
+<img src="assets/image.png" alt="screenshot-1" width="200" />
+<img src="assets/image-1.png" alt="screenshot-2" width="200" />
+</div>
+![demo-video](assets/sleep-tracker-demo.gif)
+
 ## Usage
-1. Go to https://manu-gibst-github-io.vercel.app/#/ (from smartphone)
+1. Go to https://manu-gibst-github-io.vercel.app/ (from smartphone)
 2. Press the **Start** button.
 3. Wait a couple of minutes. 
 4. Press the **Stop** button. 
@@ -12,7 +19,7 @@
 - Hosting: *Vercel*
 ### Backend
 - Frameworks: *node.js, express.js*
-- Hosting: *Vercel*
+- Hosting: *AWS EC3, Route 53*
 
 ## Formulas:
 * To calculate `stroke-linecap` for time indicaton$^7$:
@@ -32,7 +39,7 @@ $$
 
 ### Challenges
 - **Bad architecture**. My inexperience in a new framework resulted in a poor architecture and lack of component based design. I started really to understand Vue.js only towards the end of development. 
-- **Network difficulties**. During the development I stumbled upon problems of working with HTTPS protocol. For example I couldn't connect to backend because it had HTTP protocol, so I had to use *ngrok* and then later *Vercel*. 
+- **Network difficulties**. During the development I stumbled upon problems of working with HTTPS protocol. For example I couldn't connect to backend because it had HTTP protocol, so I had to use *ngrok* and then later *AWS EC2 with Route 53*. 
 - **JavaScript issues**. It was very hard to find errors with JavaScript, it is far better to use TypeScript. 
 ### Limitations
 - **Background worker**. Unfortunately, it is impossible to implement background worker to track accelerometer without going into native implementations. 
