@@ -5,7 +5,6 @@
 <img src="assets/image-1.png" alt="screenshot-2" width="200" />
 <img src="assets/sleep-tracker-demo.gif" alt="demo-video" width="200" />
 </div>
-![demo-video](assets/sleep-tracker-demo.gif)
 
 ## Usage
 1. Go to https://manu-gibst-github-io.vercel.app/ (from smartphone)
