@@ -236,9 +236,7 @@
     Service Layer
   */
 
-
-  // const baseUrl = 'http://54.196.187.98:3000';
-  const baseUrl = 'https://172.20.10.3:3000';
+  const baseUrl = 'https://sleep-tracker.manu-gibst.online/';
 
   const instance = axios.create({
     baseURL: baseUrl,
